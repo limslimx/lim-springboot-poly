@@ -22,6 +22,13 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'com.h2database:h2'
+    implementation 'org.springframework.boot:spring-boot-starter-mustache'
+    implementation 'org.springframework.boot:spring-boot-starter-logging'
+    implementation 'org.webjars.npm:github-com-TalAter-annyang:2.6.0'
+    implementation 'org.jsoup:jsoup:1.12.1'
+    runtimeOnly 'mysql:mysql-connector-java'
     compileOnly('org.projectlombok:lombok')
     annotationProcessor('org.projectlombok:lombok')
     testImplementation('org.springframework.boot:spring-boot-starter-test'){

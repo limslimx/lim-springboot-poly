@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="/js/app/annyang.js"></script>
+    <script src="/js/app/jquery-3.5.0.min.js"></script>
+    <script type="text/javascript">
+        $(window).on('load', function () {
+            getRoomList();
+
+            setInterval("getRoomList()", 5000);
+        });
+
+        function getRoomList() {
+            $.ajax({
+                url: '/chat/roomList',
+                type: 'post',
+                dataType: "JSON",
+                success : function (json) {
+                    var roomList="";
+
+                    for(var i=0;i<json.length;i++){
+                        roomList+=(json[i]+"<br>");
+                    }
+
+                    $('#room_list').html(roomList);
+
+                    getAllMsg();
+                }
+            })
+        }
+
+        function getAllMsg(){
+            $.ajax({
+                url: "/chat/getMsg",
+                type: 'post',
+                dataType: "JSON",
+                data: $("form").serialize(),
+                success: function (json) {
+                    $("#view_json").html("getAllMsg: "+json);
+
+                    doOutputMsg(json);
+                }
+            })
+        }
+
+        function doOutputMsg(json) {
+            if(json != null){
+                var msgResult="";
+
+                for(var i=0;i<json.length;i++){
+                    msgResult+=(json[i].msg);
+                    msgResult+=(" | "+json[i].userNm);
+                    msgResult+=(" | "+json[i].dateTime+"<br/>");
+                }
+                $("#total_msg").html(msgResult);
+            }
+        }
+
+        /*
+        음성인식 관련 소스 시작
+         */
+
+        annyang.start({
+            autoRestart: true,
+            continuous: true
+        })
+
+        var recognition=annyang.getSpeechRecognizer();
+        var final_transcript="";
+        recognition.interimResults=false;
+        recognition.onresult=function (event) {
+            var interim_transcript="";
+            final_transcript="";
+            for(var i=event.resultIndex;i<event.results.length;++i){
+                if(event.results[i].isFinal){
+                    final_transcript+=event.results[i][0].transcript;
+                }
+            }
+            $("#view_msg").html(final_transcript);
+            $("#send_msg").html(final_transcript);
+
+            $.ajax({
+                url: '/chat/msg',
+                type: 'post',
+                dataType: "JSON",
+                data: $("form").serialize(),
+                success: function (json) {
+                    $("#view_json").html("msg: "+json);
+
+                    doOutputMsg(json);
+                }
+            })
+
+        };
+
+        /*
+        음석인식 관련 소스 끝
+         */
+
+    </script>
+
+</head>
+<body>
+<h1>
+    {{room_name}} 채팅방 '음성대화' 전체 내용
+</h1>
+<hr/>
+<div id="total_msg"></div>
+
+<h1>내가 방금 말한 전송 메시지</h1>
+<hr/>
+<div id="view_msg"></div>
+<br/>
+<h1>채팅방 전체 리스트</h1>
+<hr/>
+<div id="room_list"></div>
+
+<!-- 음성인식 데이터를 전송하기 위한 폼 -->
+<form name="form" method="post">
+    <input type="hidden" name="send_msg" id="send_msg">
+</form>
+</body>
+</html>
