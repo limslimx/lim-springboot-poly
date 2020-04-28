@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 public class TotalMovieService {
 
     private Logger log = Logger.getLogger(String.valueOf(this.getClass()));
-    private final MovieCrawlingService movieCrawlingService;
+    private final CrawlingService crawlingService;
     private final MovieRepository movieRepository;
     private final RedisMovieRepository redisMovieRepository;
 
@@ -41,7 +41,7 @@ public class TotalMovieService {
                 movieDtoList = new ArrayList<MovieDto>();
             }
             if (movieDtoList.size() == 0) {
-                movieCrawlingService.getMovieInfoAndSave();
+                crawlingService.getMovieInfoAndSave();
                 movieDtoList = movieRepository.findMovieDto();
 
                 if (movieDtoList == null) {

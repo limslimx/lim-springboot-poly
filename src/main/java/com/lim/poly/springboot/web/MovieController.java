@@ -1,15 +1,11 @@
 package com.lim.poly.springboot.web;
 
-import com.lim.poly.springboot.domain.movie.Movie;
-import com.lim.poly.springboot.service.movie.MovieCrawlingService;
+import com.lim.poly.springboot.service.movie.CrawlingService;
 import com.lim.poly.springboot.service.movie.TotalMovieService;
 import com.lim.poly.springboot.util.CmmUtil;
-import com.lim.poly.springboot.util.DateUtil;
 import com.lim.poly.springboot.web.dto.MovieDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +20,7 @@ public class MovieController {
 
     private Logger log = Logger.getLogger(String.valueOf(this.getClass()));
     private final TotalMovieService totalMovieService;
-    private final MovieCrawlingService movieCrawlingService;
+    private final CrawlingService crawlingService;
 
     @PostMapping("/rank/movie")
     public List<MovieDto> findMovieInfo(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -45,10 +41,5 @@ public class MovieController {
         log.info(this.getClass().getName() + ".findMovieInfo end!");
         log.info("movieDtoList: "+movieDtoList);
         return movieDtoList;
-    }
-
-    @GetMapping("/test")
-    public List<Movie> test() throws Exception{
-        return movieCrawlingService.getMovieInfoAndSave();
     }
 }
