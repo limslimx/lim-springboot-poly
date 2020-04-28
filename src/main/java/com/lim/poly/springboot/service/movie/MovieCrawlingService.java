@@ -50,7 +50,6 @@ public class MovieCrawlingService {
             movieDto.setMovie_name(CmmUtil.nvl((movie_name.next().text()).trim()));
             movieDto.setScore(CmmUtil.nvl(score.next().text()).trim());
             movieDto.setOpen_day(CmmUtil.nvl(open_day.next().text()).trim().substring(0,10));
-            movieDto.setRank_check_time(CmmUtil.nvl(DateUtil.getDateTime("yyyyMMdd")));
 
             movie=movieDto.toEntity();
             movieRepository.save(movie);

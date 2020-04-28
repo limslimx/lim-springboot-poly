@@ -20,9 +20,9 @@ public class MovieDto {
 
     public String open_day;
 
-    public String rank_check_time;
+    public LocalDateTime rank_check_time;
 
-    public MovieDto(String movie_rank, String movie_name, String score, String open_day, String rank_check_time) {
+    public MovieDto(String movie_rank, String movie_name, String score, String open_day, LocalDateTime rank_check_time) {
         this.movie_rank = movie_rank;
         this.movie_name = movie_name;
         this.score = score;
@@ -36,6 +36,7 @@ public class MovieDto {
                 .movie_name(movie_name)
                 .score(score)
                 .open_day(open_day)
+                .rank_check_time(LocalDateTime.now())
                 .build();
     }
 }

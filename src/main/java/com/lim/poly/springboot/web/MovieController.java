@@ -24,6 +24,7 @@ public class MovieController {
 
     private Logger log = Logger.getLogger(String.valueOf(this.getClass()));
     private final TotalMovieService totalMovieService;
+    private final MovieCrawlingService movieCrawlingService;
 
     @PostMapping("/rank/movie")
     public List<MovieDto> findMovieInfo(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -34,7 +35,6 @@ public class MovieController {
         log.info(send_msg);
         if (((send_msg.indexOf("영화") > -1) || (send_msg.indexOf("영하") > -1) || (send_msg.indexOf("연하") > -1) || (send_msg.indexOf("연화") > -1))  && ((send_msg.indexOf("순위") > -1) || (send_msg.indexOf("순이") > -1))) {
             MovieDto movieDto = new MovieDto();
-            movieDto.setRank_check_time(DateUtil.getDateTime("yyyyMMdd"));
             movieDtoList = totalMovieService.getMovieInfo(movieDto);
             log.info("movieDtoList.rank_check_time:"+movieDtoList.get(0).getRank_check_time());
 
@@ -45,5 +45,10 @@ public class MovieController {
         log.info(this.getClass().getName() + ".findMovieInfo end!");
         log.info("movieDtoList: "+movieDtoList);
         return movieDtoList;
+    }
+
+    @GetMapping("/test")
+    public List<Movie> test() throws Exception{
+        return movieCrawlingService.getMovieInfoAndSave();
     }
 }
