@@ -3,6 +3,7 @@ package com.lim.poly.springboot.domain.movie;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
@@ -21,6 +22,8 @@ public class Movie {
     private String score;
 
     private String open_day;
+
+    private String rank_check_time;
 
     @Builder
     public Movie(String movie_rank, String movie_name, String score, String open_day){

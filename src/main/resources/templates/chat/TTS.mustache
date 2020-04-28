@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>TTS</title>
 </head>
-<script src="/static/js/app/annyang.js"></script>
+<script src="/js/app/annyang.js"></script>
 <script>
     annyang.start({
         autoRestart: true,
@@ -21,15 +21,15 @@
     recognition.onresult=function (event) {
         var interim_transcript="";
         final_transcript="";
-        for(var i=event.resultIndex;i<event.results.length;++i){
+        for(var i=event.resultIndex; i<event.results.length; ++i){
             if(event.results[i].isFinal){
                 final_transcript+=event.results[i][0].transcript;
             }else{
                 interim_transcript+=event.results[i][0].transcript;
             }
         }
-        document.getElementById("ing").innerHTML="말하는 중"+interim_transcript;
-        document.getElementById("result").innerHTML="말 다했음"+final_transcript;
+        document.getElementById("ing").innerHTML="말하는 중: "+interim_transcript;
+        document.getElementById("result").innerHTML="말 다했음: "+final_transcript;
     }
 </script>
 <body>
