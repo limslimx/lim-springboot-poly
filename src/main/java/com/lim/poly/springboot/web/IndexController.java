@@ -25,11 +25,11 @@ public class IndexController {
         return getSetService.test();
     }
 
-    @RequestMapping("/rank/index")
+    @GetMapping("/weather")
     public String index(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        log.info(this.getClass().getName() + ".index start!");
-        log.info(this.getClass().getName() + ".index end!");
-        return "/rank/index";
+        log.info(this.getClass().getName()+".index start!");
+        log.info(this.getClass().getName()+".index end!");
+        return "/weather/index";
     }
 
 }

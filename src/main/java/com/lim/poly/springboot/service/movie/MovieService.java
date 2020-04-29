@@ -2,6 +2,7 @@ package com.lim.poly.springboot.service.movie;
 
 import com.lim.poly.springboot.domain.movie.MovieRepository;
 import com.lim.poly.springboot.repository.movie.RedisMovieRepository;
+import com.lim.poly.springboot.service.CrawlingService;
 import com.lim.poly.springboot.util.DateUtil;
 import com.lim.poly.springboot.web.dto.MovieDto;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +14,7 @@ import java.util.logging.Logger;
 
 @RequiredArgsConstructor
 @Service
-public class TotalMovieService {
+public class MovieService {
 
     private Logger log = Logger.getLogger(String.valueOf(this.getClass()));
     private final CrawlingService crawlingService;

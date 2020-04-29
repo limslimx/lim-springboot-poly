@@ -10,5 +10,4 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
 
     @Query("select new com.lim.poly.springboot.web.dto.MovieDto(m.movie_rank, m.movie_name, m.score, m.open_day, m.rank_check_time) from Movie m")
     List<MovieDto> findMovieDto();
-
 }

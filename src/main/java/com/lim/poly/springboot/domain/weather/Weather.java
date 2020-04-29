@@ -16,25 +16,22 @@ public class Weather {
     @Column(name = "weather_id")
     private Long id;
 
-    private String today_weather;
+    private String weather;
 
-    private String today_temperature;
+    private String temperature;
 
-    private String today_rain;
+    private String rain;
 
-    private String tomorrow_weather;
+    private String search_time;
 
-    private String tomorrow_temperature;
-
-    private String tomorrow_rain;
+    private String msg;
 
     @Builder
-    public Weather(String today_weather, String today_temperature, String today_rain, String tomorrow_weather, String tomorrow_temperature, String tomorrow_rain){
-        this.today_weather=today_weather;
-        this.today_temperature=today_temperature;
-        this.today_rain=today_rain;
-        this.tomorrow_weather=tomorrow_weather;
-        this.tomorrow_temperature=tomorrow_temperature;
-        this.tomorrow_rain=tomorrow_rain;
+    public Weather(String weather, String temperature, String rain, String search_time, String msg){
+        this.weather = weather;
+        this.temperature = temperature;
+        this.rain = rain;
+        this.search_time = search_time;
+        this.msg = msg;
     }
 }

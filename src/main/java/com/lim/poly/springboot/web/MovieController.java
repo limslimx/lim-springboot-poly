@@ -1,8 +1,9 @@
 package com.lim.poly.springboot.web;
 
-import com.lim.poly.springboot.service.movie.CrawlingService;
-import com.lim.poly.springboot.service.movie.TotalMovieService;
+import com.lim.poly.springboot.service.CrawlingService;
+import com.lim.poly.springboot.service.movie.MovieService;
 import com.lim.poly.springboot.util.CmmUtil;
+import com.lim.poly.springboot.util.DateUtil;
 import com.lim.poly.springboot.web.dto.MovieDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +20,7 @@ import java.util.logging.Logger;
 public class MovieController {
 
     private Logger log = Logger.getLogger(String.valueOf(this.getClass()));
-    private final TotalMovieService totalMovieService;
+    private final MovieService movieService;
     private final CrawlingService crawlingService;
 
     @PostMapping("/rank/movie")
@@ -31,7 +32,8 @@ public class MovieController {
         log.info(send_msg);
         if (((send_msg.indexOf("영화") > -1) || (send_msg.indexOf("영하") > -1) || (send_msg.indexOf("연하") > -1) || (send_msg.indexOf("연화") > -1))  && ((send_msg.indexOf("순위") > -1) || (send_msg.indexOf("순이") > -1))) {
             MovieDto movieDto = new MovieDto();
-            movieDtoList = totalMovieService.getMovieInfo(movieDto);
+            movieDto.setRank_check_time(DateUtil.getDateTime("yyyyMMdd"));
+            movieDtoList = movieService.getMovieInfo(movieDto);
             log.info("movieDtoList.rank_check_time:"+movieDtoList.get(0).getRank_check_time());
 
             if(movieDtoList==null){

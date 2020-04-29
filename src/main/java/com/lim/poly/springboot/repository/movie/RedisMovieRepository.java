@@ -51,6 +51,7 @@ public class RedisMovieRepository {
         if(this.getExists(key)){
             redisDb.delete(key);
         }
+
         Iterator<MovieDto> it = movieDtoList.iterator();
         while (it.hasNext()){
             MovieDto movieDto = (MovieDto) it.next();

@@ -1,10 +1,11 @@
-package com.lim.poly.springboot.service.movie;
+package com.lim.poly.springboot.service;
 
 import com.lim.poly.springboot.domain.movie.Movie;
 import com.lim.poly.springboot.domain.movie.MovieRepository;
 import com.lim.poly.springboot.domain.weather.Weather;
 import com.lim.poly.springboot.domain.weather.WeatherRepository;
 import com.lim.poly.springboot.util.CmmUtil;
+import com.lim.poly.springboot.util.DateUtil;
 import com.lim.poly.springboot.web.dto.MovieDto;
 import com.lim.poly.springboot.web.dto.WeatherDto;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
@@ -65,34 +67,45 @@ public class CrawlingService {
         return movieRepository.findAll();
     }
 
-    public List<Weather> getWeatherInfoAndSave() throws Exception {
+    public List<Weather> getWeatherInfoAndSave(String day) throws Exception {
         log.info(this.getClass().getName() + ".getWeatherInfoAndSave start!");
 
         url = "https://weather.naver.com/";
         doc = Jsoup.connect(url).get();
-        Elements todayElements = doc.select("div.m_zone1 table.m_tbl tr:nth-child(3)");
-        Elements today = todayElements.select("td.info");
-        String today_weather = today.text().substring(0, 2);
-        String today_temparature=today.text().substring(6, 11);
-        String today_rain=today.text().substring(17, today.text().length());
+        String weather="";
+        String temperature="";
+        String rain="";
+        String msg="";
 
-        Elements tomorrowElements = doc.select("div.m_zone1 table.m_tbl tr:nth-child(5)");
-        Elements tomorrow = tomorrowElements.select("td.info");
-        String tomorrow_weather = tomorrow.text().substring(0, 4);
-        String tomorrow_temperature = tomorrow.text().substring(8, 13);
-        String tomorrow_rain = tomorrow.text().substring(19, tomorrow.text().length());
+        log.info(day);
+        if (day == "TODAY") {
+            log.info("crawlingday="+day);
+            Elements todayElements = doc.select("div.m_zone1 table.m_tbl tr:nth-child(3)");
+            Elements today = todayElements.select("td.info");
+            weather = today.text().substring(0, 2);
+            temperature = today.text().substring(6, 11);
+            rain = today.text().substring(17, today.text().length());
+            msg = "today";
+        }else if(day == "TOMORROW") {
+            log.info("crawlingday="+day);
+            Elements tomorrowElements = doc.select("div.m_zone1 table.m_tbl tr:nth-child(5)");
+            Elements tomorrow = tomorrowElements.select("td.info");
+            weather = tomorrow.text().substring(0, 4);
+            temperature = tomorrow.text().substring(8, 13);
+            rain = tomorrow.text().substring(19, tomorrow.text().length());
+            msg = "tomorrow";
+        }
 
         WeatherDto weatherDto=WeatherDto.builder()
-                .today_weather(today_weather)
-                .today_temperature(today_temparature)
-                .today_rain(today_rain)
-                .tomorrow_weather(tomorrow_weather)
-                .tomorrow_temperature(tomorrow_temperature)
-                .tomorrow_rain(tomorrow_rain)
+                .weather(weather)
+                .temperature(temperature)
+                .rain(rain)
+                .search_time(DateUtil.getDateTime("yyyyMMdd"))
+                .msg(msg)
                 .build();
 
-        Weather weather = weatherDto.toEntity();
-        weatherRepository.save(weather);
+        Weather weatherEntity = weatherDto.toEntity();
+        weatherRepository.save(weatherEntity);
         log.info(this.getClass().getName() + ".getWeatherInfoAndSave end!");
 
         return weatherRepository.findAll();
