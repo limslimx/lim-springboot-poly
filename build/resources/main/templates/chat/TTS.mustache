@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TTS</title>
+</head>
+<script src="/js/app/annyang.js"></script>
+<script>
+    annyang.start({
+        autoRestart: true,
+        continuous: true
+    })
+
+    var recognition=annyang.getSpeechRecognizer();
+    var final_transcript="";
+
+    recognition.interimResults=true;
+    recognition.onresult=function (event) {
+        var interim_transcript="";
+        final_transcript="";
+        for(var i=event.resultIndex; i<event.results.length; ++i){
+            if(event.results[i].isFinal){
+                final_transcript+=event.results[i][0].transcript;
+            }else{
+                interim_transcript+=event.results[i][0].transcript;
+            }
+        }
+        document.getElementById("ing").innerHTML="말하는 중: "+interim_transcript;
+        document.getElementById("result").innerHTML="말 다했음: "+final_transcript;
+    }
+</script>
+<body>
+<h1>한국어 음성처리 테스트</h1>
+<hr/>
+<div id="ing">결과가 없습니다.</div>
+<div id="result">결과가 없습니다.</div>
+</body>
+</html>
