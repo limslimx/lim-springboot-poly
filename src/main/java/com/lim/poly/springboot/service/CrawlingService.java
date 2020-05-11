@@ -82,17 +82,19 @@ public class CrawlingService {
             log.info("crawlingday="+day);
             Elements todayElements = doc.select("div.m_zone1 table.m_tbl tr:nth-child(3)");
             Elements today = todayElements.select("td.info");
-            weather = today.text().substring(0, 2);
-            temperature = today.text().substring(6, 11);
-            rain = today.text().substring(17, today.text().length());
+            log.info(today.text());
+            weather = today.text().substring(0, 4);
+            temperature = today.text().substring(8, 13);
+            rain = today.text().substring(19, today.text().length());
             msg = "today";
         }else if(day == "TOMORROW") {
             log.info("crawlingday="+day);
             Elements tomorrowElements = doc.select("div.m_zone1 table.m_tbl tr:nth-child(5)");
             Elements tomorrow = tomorrowElements.select("td.info");
-            weather = tomorrow.text().substring(0, 4);
-            temperature = tomorrow.text().substring(8, 13);
-            rain = tomorrow.text().substring(19, tomorrow.text().length());
+            log.info(tomorrow.text());
+            weather = tomorrow.text().substring(0, 2);
+            temperature = tomorrow.text().substring(6, 11);
+            rain = tomorrow.text().substring(17, tomorrow.text().length());
             msg = "tomorrow";
         }
 

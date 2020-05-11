@@ -39,10 +39,9 @@
                 success: function (json) {
                     var msgResult = "";
                     for (var i = 0; i < json.length; i++) {
-                        msgResult += ("오늘의 날씨입니다." + "<br/><br/>");
-                        msgResult += ("오늘 날씨: " + json[i].weather + "<br/>");
-                        msgResult += ("오늘 기온: " + json[i].temperature + "<br/>");
-                        msgResult += ("오늘 강수여부: " + json[i].rain + "<br/>");
+                        msgResult += ("날씨: " + json[i].weather + "<br/>");
+                        msgResult += ("기온: " + json[i].temperature + "<br/>");
+                        msgResult += ("강수여부: " + json[i].rain + "<br/>");
                         msgResult += ("<hr/>");
                     }
                     $("#weather_info").html(msgResult);
@@ -58,7 +57,7 @@
 <hr/>
 <div id="view_msg"></div>
 <br/>
-<h1>오늘의 날씨</h1>
+<h1>날씨</h1>
 <hr/>
 <div id="weather_info"></div>
 
