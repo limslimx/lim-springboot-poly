@@ -3,6 +3,7 @@ package com.lim.poly.springboot.web.dto;
 import com.lim.poly.springboot.domain.melon.Melon;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter @Setter
 public class MelonDto {

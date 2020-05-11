@@ -1,8 +1,6 @@
 package com.lim.poly.springboot.service.melon;
 
-import com.lim.poly.springboot.domain.melon.Melon;
 import com.lim.poly.springboot.repository.melon.MelonMapper;
-import com.lim.poly.springboot.repository.melon.MelonRepository;
 import com.lim.poly.springboot.util.DateUtil;
 import com.lim.poly.springboot.web.dto.MelonDto;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +8,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -67,6 +64,21 @@ public class MelonService {
         log.info(this.getClass().getName() + ".collectMelonRank end!");
 
         return res;
+    }
+
+    public List<MelonDto> getRank() throws Exception {
+        log.info(this.getClass().getName() + ".getRank start!");
+
+        String colNm = "MelonTOP100_" + DateUtil.getDateTime("yyyyMMdd");
+
+        List<MelonDto> melonDtoList = melonMapper.getRank(colNm);
+
+        if (melonDtoList == null) {
+            melonDtoList = new ArrayList<MelonDto>();
+        }
+        log.info(this.getClass().getName() + ".getRank end!");
+
+        return melonDtoList;
     }
 
 }

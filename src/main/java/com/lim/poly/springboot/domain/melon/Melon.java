@@ -1,5 +1,7 @@
 package com.lim.poly.springboot.domain.melon;
 
+import com.lim.poly.springboot.service.melon.MelonService;
+import com.lim.poly.springboot.util.DateUtil;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
@@ -9,8 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import javax.persistence.Id;
 
 @Getter
-@CompoundIndex(def = "{'collect_time': 1, 'rank': 1}", name = "rankIdx")
-@Document(collection = "melons")
+@Document
 public class Melon {
 
     @Id

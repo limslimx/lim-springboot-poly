@@ -20,16 +20,23 @@ public class IndexController {
     private final GetSetService getSetService;
 
     @GetMapping("/")
-    public String index(){
+    public String index() {
         getSetService.test();
         return getSetService.test();
     }
 
     @GetMapping("/weather")
     public String index(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        log.info(this.getClass().getName()+".index start!");
-        log.info(this.getClass().getName()+".index end!");
+        log.info(this.getClass().getName() + ".index start!");
+        log.info(this.getClass().getName() + ".index end!");
         return "/weather/index";
     }
 
+    @GetMapping("melon/melonTop100")
+    public String melonTop100() throws Exception {
+        log.info(this.getClass().getName() + ".melonTop100 start!");
+        log.info(this.getClass().getName() + ".melonTop100 end!");
+
+        return "/melon/melonTop100";
+    }
 }

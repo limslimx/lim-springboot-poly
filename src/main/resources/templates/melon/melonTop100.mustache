@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>melonTop100</title>
+    <script src="/js/app/jquery-3.5.0.min.js"></script>
+    <script>
+        $(window).on("load", function () {
+            getRank();
+        });
+
+        function getRank() {
+            $.ajax({
+                url: "/melon/getRank",
+                type: "post",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                    console.log(result);
+                    var melon_rank = "";
+                    for (var i = 0; i < result.length; i++) {
+                        melon_rank += (result[i].rank + "위 | ");
+                        melon_rank += (result[i].song + " | ");
+                        melon_rank += (result[i].singer + " | ");
+                        melon_rank += (result[i].album + "<br/>");
+                    }
+
+                    $("#melon_rank").html(melon_rank);
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+    <h1>멜론 순위</h1>
+    <hr/>
+    <div id="melon_rank"></div>
+    <br/>
+</body>
+</html>
